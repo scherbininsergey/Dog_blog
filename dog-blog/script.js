@@ -158,7 +158,7 @@ function renderPostsFromStorage() {
     // Обновляем photoData для постов
     posts.forEach(post => {
         photoData[`post-${post.id}`] = {
-            title: 'История из админ-панели',
+            title: post.title,
             text: post.content
         };
     });
