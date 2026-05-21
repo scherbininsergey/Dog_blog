@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Блог о моей собаке</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Стили для админ-панели */
+        .admin-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .admin-title {
+            font-size: 2rem;
+            color: #2c3e50;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+        }
+
+        .admin-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-heading {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .file-input-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .file-input-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .file-name {
+            margin-left: 1rem;
+            color: #666;
+        }
+
+        .add-post-btn {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
+            width: 100%;
+        }
+
+        .add-post-btn:hover {
+            background: linear-gradient(135deg, #229954 0%, #27ae60 100%);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.6);
+        }
+
+        .posts-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .post-item {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .post-item:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .post-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .post-info {
+            flex: 1;
+        }
+
+        .post-title {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-content {
+            color: #666;
+            font-size: 0.9rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .delete-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .no-posts {
+            text-align: center;
+            color: #999;
+            padding: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .preview-image.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .post-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .post-actions {
+                justify-content: center;
+            }
+
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="furry-bg"></div>
+    
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Главная</a>
+            <a href="gallery.html" class="nav-link">Галерея</a>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1 class="admin-title">🐾 Админ-панель</h1>
+                <button class="logout-btn" onclick="logout()">Выйти</button>
+            </div>
+
+            <!-- Секция добавления поста -->
+            <div class="admin-section">
+                <h2 class="section-heading">Добавить новую историю</h2>
+                <form id="addPostForm" onsubmit="addPost(event)">
+                    <div class="form-group">
+                        <label class="form-label">Заголовок</label>
+                        <input type="text" id="postTitle" class="form-input" placeholder="Введите заголовок истории" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Текст истории</label>
+                        <textarea id="postContent" class="form-textarea" placeholder="Расскажите свою историю..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Фотография</label>
+                        <div class="file-input-wrapper">
+                            <span class="file-input-btn">Выбрать файл</span>
+                            <input type="file" id="postImage" accept="image/*" onchange="previewImage(this)" required>
+                        </div>
+                        <span class="file-name" id="fileName">Файл не выбран</span>
+                        <img id="imagePreview" class="preview-image" alt="Предпросмотр">
+                    </div>
+
+                    <button type="submit" class="add-post-btn">➕ Добавить историю</button>
+                </form>
+            </div>
+
+            <!-- Секция списка постов -->
+            <div class="admin-section">
+                <h2 class="section-heading">Существующие истории</h2>
+                <div id="postsList" class="posts-list">
+                    <!-- Посты будут загружены здесь -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Блог Алтая. Все права защищены лапками.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Проверка авторизации при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn');
+            if (!isAdminLoggedIn || isAdminLoggedIn !== 'true') {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Загружаем список постов
+            loadPostsList();
+        });
+
+        // Функция выхода
+        function logout() {
+            localStorage.removeItem('isAdminLoggedIn');
+            window.location.href = 'index.html';
+        }
+
+        // Предпросмотр изображения
+        function previewImage(input) {
+            const fileName = document.getElementById('fileName');
+            const imagePreview = document.getElementById('imagePreview');
+            
+            if (input.files && input.files[0]) {
+                fileName.textContent = input.files[0].name;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.add('show');
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                fileName.textContent = 'Файл не выбран';
+                imagePreview.classList.remove('show');
+            }
+        }
+
+        // Добавление поста
+        function addPost(event) {
+            event.preventDefault();
+
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+            const imageInput = document.getElementById('postImage');
+
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageData = e.target.result;
+
+                    const newPost = {
+                        id: Date.now(),
+                        title: title,
+                        content: content,
+                        image: imageData,
+                        date: new Date().toISOString()
+                    };
+
+                    // Получаем существующие посты
+                    const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+                    posts.push(newPost);
+                    localStorage.setItem('blogPosts', JSON.stringify(posts));
+
+                    // Очищаем форму
+                    document.getElementById('addPostForm').reset();
+                    document.getElementById('fileName').textContent = 'Файл не выбран';
+                    document.getElementById('imagePreview').classList.remove('show');
+
+                    // Перезагружаем список постов
+                    loadPostsList();
+
+                    alert('История успешно добавлена! 🐕');
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            }
+        }
+
+        // Загрузка списка постов
+        function loadPostsList() {
+            const postsList = document.getElementById('postsList');
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+
+            if (posts.length === 0) {
+                postsList.innerHTML = '<p class="no-posts">Пока нет добавленных историй. Будьте первым! 🦴</p>';
+                return;
+            }
+
+            postsList.innerHTML = posts.map(post => `
+                <div class="post-item">
+                    <img src="${post.image}" alt="${post.title}" class="post-image">
+                    <div class="post-info">
+                        <h3 class="post-title">${post.title}</h3>
+                        <p class="post-content">${post.content}</p>
+                    </div>
+                    <div class="post-actions">
+                        <button class="delete-btn" onclick="deletePost(${post.id})">🗑️ Удалить</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Удаление поста
+        function deletePost(postId) {
+            if (confirm('Вы уверены, что хотите удалить эту историю?')) {
+                const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+                const filteredPosts = posts.filter(post => post.id !== postId);
+                localStorage.setItem('blogPosts', JSON.stringify(filteredPosts));
+                loadPostsList();
+                alert('История удалена! 🐾');
+            }
+        }
+    </script>
+</body>
+</html>
