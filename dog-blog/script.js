@@ -113,7 +113,7 @@ function checkLogin() {
     if (username === '123' && password === '123') {
         localStorage.setItem('isAdminLoggedIn', 'true');
         closeLoginModal();
-        window.location.href = 'admin.html';
+        window.location.href = 'adm_site.html';
     } else {
         alert('Неверный логин или пароль!');
     }
