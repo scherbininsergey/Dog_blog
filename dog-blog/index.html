@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог о моей собаке</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="furry-bg"></div>
+    
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="nav-link active">Главная</a>
+            <a href="gallery.html" class="nav-link">Галерея</a>
+        </nav>
+        <button class="admin-btn" onclick="openLoginModal()">Админ</button>
+    </header>
+
+    <main class="main">
+        <section class="hero">
+            <h1 class="hero-title">Привет, я Алтай!</h1>
+            <p class="hero-subtitle">Добро пожаловать в мой блог о приключениях белой овчарки</p>
+            <div class="hero-image">
+                <img src="../images/photo1.jpg" alt="Алтай" class="hero-img">
+            </div>
+        </section>
+
+        <section class="gallery-preview">
+            <h2 class="section-title" style="text-align: center;">Мои истории</h2>
+            <div class="carousel-container">
+                <button class="carousel-btn carousel-prev">&#10094;</button>
+                <div class="carousel">
+                    <div class="carousel-track">
+                        <div class="photo-item" data-photo="1">
+                            <img src="../images/photo1.jpg" alt="Фото 1">
+                        </div>
+                        <div class="photo-item" data-photo="2">
+                            <img src="../images/photo2.jpg" alt="Фото 2">
+                        </div>
+                        <div class="photo-item" data-photo="3">
+                            <img src="../images/photo3.jpg" alt="Фото 3">
+                        </div>
+                        <div class="photo-item" data-photo="4">
+                            <img src="../images/photo4.jpg" alt="Фото 4">
+                        </div>
+                        <div class="photo-item" data-photo="5">
+                            <img src="../images/photo5.jpg" alt="Фото 5">
+                        </div>
+                        <div class="photo-item" data-photo="1">
+                            <img src="../images/photo1.jpg" alt="Фото 6">
+                        </div>
+                        <div class="photo-item" data-photo="2">
+                            <img src="../images/photo2.jpg" alt="Фото 7">
+                        </div>
+                        <div class="photo-item" data-photo="3">
+                            <img src="../images/photo3.jpg" alt="Фото 8">
+                        </div>
+                        <div class="photo-item" data-photo="4">
+                            <img src="../images/photo4.jpg" alt="Фото 9">
+                        </div>
+                        <div class="photo-item" data-photo="5">
+                            <img src="../images/photo5.jpg" alt="Фото 10">
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn carousel-next">&#10095;</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Модальное окно -->
+    <div class="modal" id="photoModal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <img src="" alt="" class="modal-image" id="modalImage">
+            <div class="modal-text" id="modalText"></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно входа -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content login-modal">
+            <span class="modal-close" onclick="closeLoginModal()">&times;</span>
+            <h2>Вход в админ-панель</h2>
+            <input type="text" id="loginUsername" placeholder="Логин" class="login-input">
+            <input type="password" id="loginPassword" placeholder="Пароль" class="login-input">
+            <button class="add-btn" onclick="checkLogin()">Войти</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Блог Алтая. Все права защищены лапками.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
